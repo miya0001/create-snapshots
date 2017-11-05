@@ -5,7 +5,7 @@
 ### SSH into your instance
 
 ```
-ssh ec2-user@<ip-address>
+ssh ubuntu@<ip-address>
 ```
 
 ### Creating an IAM user
