@@ -20,7 +20,7 @@ LN=`echo $((${#AZ} - 1))`
 REGION=`echo ${AZ} | cut -c 1-${LN}`
 SNAPSHOTS_PERIOD=${SNAPSHOTS_PERIOD-2}
 
-AWS="/usr/bin/aws --region ${REGION}"
+AWS="/usr/local/bin/aws --region ${REGION}"
 
 INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
 INSTANCE_NAME=`${AWS} ec2 describe-instances --instance-ids ${INSTANCE_ID} --output json | jq -r '.Reservations[].Instances[].Tags[] | select(.Key == "Name").Value'`
@@ -60,8 +60,6 @@ delete_old_snapshot() {
         SNAPSHOTS=`${AWS} ec2 describe-snapshots | grep ${VOL_ID} | grep "Created by SYSTEMBK" | wc -l`
     done
 }
-
-sudo yum install jq
 
 create_snapshot
 delete_old_snapshot
